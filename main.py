@@ -126,7 +126,7 @@ def get_course_list(session, coursecateurl):
                 elif json.loads(resp.text)['code'] == -1 and flag:
                     print('什么都没抢到')
                     break
-                time.sleep(0.2)
+                time.sleep(0.5)
             break
         time.sleep(0.01)
 
