@@ -9,15 +9,15 @@ from Crypto.Util.Padding import pad
 from PIL import Image
 from bs4 import BeautifulSoup
 
-captcha_url = "http://zhjw.smu.edu.cn/yzm?d="
-login_url = "http://zhjw.smu.edu.cn/new/login"
+captcha_url = "https://zhjw.smu.edu.cn/yzm?d="
+login_url = "https://zhjw.smu.edu.cn/new/login"
 headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "Accept-Encoding": "gzip, deflate",
     "Accept-Language": "zh-CN,zh;q=0.9",
     "Connection": "keep-alive",
     "Host": "zhjw.smu.edu.cn",
-    "Referer": "http://zhjw.smu.edu.cn/",
+    "Referer": "https://zhjw.smu.edu.cn/",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 }
@@ -70,8 +70,8 @@ def calibration(response):
 
 
 def get_course_category(session):
-    session.get("http://zhjw.smu.edu.cn/new/welcome.page", headers=headers)
-    url = "http://zhjw.smu.edu.cn/new/xsxk/"
+    session.get("https://zhjw.smu.edu.cn/new/welcome.page", headers=headers)
+    url = "https://zhjw.smu.edu.cn/new/xsxk/"
     response = session.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'lxml')
     courses = soup.find_all('li', {'style': True})
@@ -82,7 +82,7 @@ def get_course_category(session):
         course_link = course['data-href']
         coursedict[idx] = course_link
         print(f"{idx}. {course_name}")
-    get_course_list(session, "http://zhjw.smu.edu.cn" + coursedict[int((input("请填写序号")))])
+    get_course_list(session, "https://zhjw.smu.edu.cn" + coursedict[int((input("请填写序号")))])
 
 
 def get_course_list(session, coursecateurl):
