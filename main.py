@@ -94,8 +94,9 @@ def get_course_list(session, coursecateurl):
         'order': 'asc'
     }
     response = session.post(geturl, headers=headers, data=payload)
-    total = json.loads(response.text)['total']
-    courses = json.loads(response.text)['rows']
+    responsetext = json.loads(response.text)
+    total = responsetext['total']
+    courses = responsetext['rows']
     while len(courses) < total:
         payload['page'] += 1
         response = session.post(geturl, headers=headers, data=payload)
@@ -117,13 +118,14 @@ def get_course_list(session, coursecateurl):
         if now >= selection_time:
             for i in range(20):
                 resp = order_course(session, courses[order - 1]['kcrwdm'], courses[order - 1]['kcmc'], coursecateurl)
-                if json.loads(resp.text)['code'] == 0 or json.loads(resp.text)['message'] == '您已经选了该门课程':
+                resptext = json.loads(resp.text)
+                if resptext['code'] == 0 or resptext['message'] == '您已经选了该门课程':
                     print('选课成功')
                     break
-                elif json.loads(resp.text)['code'] == -1 and not flag:
+                elif resptext['code'] == -1 and not flag:
                     order = order2
                     flag = True
-                elif json.loads(resp.text)['code'] == -1 and flag:
+                elif resptext['code'] == -1 and flag:
                     print('什么都没抢到')
                     break
                 time.sleep(0.5)
